@@ -1,6 +1,7 @@
 // Imports
 const express = require('express');
 const {engine} =  require('express-handlebars');
+const routes = require('./controllers');
 
 // app and port initialization
 const app = express();
@@ -15,6 +16,9 @@ app.set('views', './views');
 app.get('/', (req, res) => {
   res.render('home');
 })
+
+// add routes
+app.use(routes);
 
 // start listening
 app.listen(port, () => {
