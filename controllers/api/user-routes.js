@@ -3,7 +3,9 @@ const router = require('express').Router();
 const {User} = require('../../models');
 
 router.get('/', (req,res) => {
-  User.findAll().then( userData => {
+  User.findAll({
+    attributes: {exclude: ['password']}
+  }).then( userData => {
     if(!userData){
       res.json({message:"no user data"});
       return;
