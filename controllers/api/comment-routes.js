@@ -1,18 +1,19 @@
 // Router initialization
 const router = require('express').Router();
-const {Post,User,Comment} = require('../../models');
+const {Comment, Post, User} = require('../../models');
 
 router.get('/',(req,res) => {
-  Post.findAll({
+  Comment.findAll({
     include: [
-      {model: User},
-      {model: Comment}
+      {model:User},
+      {model:Post}
     ]
-  }).then( postData => {
-    if(!postData){
-      res.status(400).json({message:"no post data"});
+  })
+  .then( commentData => {
+    if(!commentData){
+      res.status(400).json({message:"no comment data"});
     }else{
-      res.status(200).json(postData);
+      res.status(200).json(commentData);
     }
   })
   .catch(err => {
@@ -21,14 +22,15 @@ router.get('/',(req,res) => {
 })
 
 router.post('/',(req,res) => {
-  Post.create({
-    title: req.body.title,
-    post_body: req.body.post_body,
+  Comment.create({
+    comment_text: req.body.comment_text,
+    post_id: req.body.post_id,
     // need to update via session data
     user_id: 1
+    // need to add validations for comment text length
   }).then(success => {
     if(success){
-      res.status(200).json({message:"new post created"});
+      res.status(200).json({message:"new comment created"});
     }
   }).catch(err => {
     res.status(500).json(err);
@@ -36,16 +38,15 @@ router.post('/',(req,res) => {
 })
 
 router.put('/:id',(req,res) => {
-  Post.update({
-    title: req.body.title,
-    post_body: req.body.post_body
+  Comment.update({
+    comment_text: req.body.comment_text
   },{
     where: { id : req.params.id }
   }).then(success => {
     if(success[0]){
-      res.status(200).json({message:"post updated"});
+      res.status(200).json({message:"comment updated"});
     }else{
-      res.status(400).json({message:"no post for id"});
+      res.status(400).json({message:"no comment for id"});
     }
   }).catch(err => {
     res.status(500).json(err);
@@ -53,13 +54,13 @@ router.put('/:id',(req,res) => {
 })
 
 router.delete('/:id',(req,res) => {
-  Post.destroy({
+  Comment.destroy({
     where: {id: req.params.id}
   }).then(success => {
     if(success){
-      res.status(200).json({message:"post deleted"});
+      res.status(200).json({message:"comment deleted"});
     }else{
-      res.status(400).json({message:"no post for id"});
+      res.status(400).json({message:"no comment for id"});
     }
   }).catch(err => {
     res.status(500).json(err);
