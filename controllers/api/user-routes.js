@@ -18,4 +18,20 @@ router.get('/', (req,res) => {
   })
 });
 
+router.post('/', (req,res) => {
+  User.create({
+    first_name: req.body.firstname,
+    last_name: req.body.lastname,
+    email: req.body.email,
+    username: req.body.username,
+    password: req.body.password
+  }).then( success => {
+    if(success){
+      res.status(200).json({message: "Successfully created new user"});
+    }
+  }).catch(err => {
+    res.status(500).json(err);
+  })
+});
+
 module.exports = router;

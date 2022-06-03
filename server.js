@@ -12,6 +12,10 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
+// middleware to populate req.body
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 // setup routes
 app.get('/', (req, res) => {
   res.render('home');
