@@ -34,4 +34,24 @@ router.post('/', (req,res) => {
   })
 });
 
+router.put('/:id', (req,res) => {
+  User.update({
+    first_name: req.body.firstname,
+    last_name: req.body.lastname
+  },{
+    where: {
+      id: req.params.id
+    }
+  })
+  .then( (success) => {
+    if(success[0]){
+      res.status(200).json({message: "Successfully updated user"});
+    }else{
+      res.status(400).json({message: "No user for id"});
+    }
+  }).catch(err => {
+    res.status(500).json(err);
+  })
+});
+
 module.exports = router;
