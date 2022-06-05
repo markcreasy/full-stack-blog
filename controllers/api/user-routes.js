@@ -55,35 +55,47 @@ router.get('/logout', (req,res) => {
 })
 
 router.post('/login', (req,res) => {
-  User.count({
+  User.findOne({
     where: {
-      username: req.body.username,
-      password: req.body.password
+      username: req.body.username
     }
-  }).then(success => {
-    if(success){
-      // regenerate the session, which is good practice to help
-      // guard against forms of session fixation
-      req.session.regenerate(function (err) {
-        if (err) next(err);
-
-        // store user information in session, typically a user id
-        req.session.user = req.body.username;
-        req.session.loggedIn = true;
-
-        // save the session before redirection to ensure page
-        // load does not happen before session is saved
-        req.session.save(function (err) {
-          if (err) return next(err);
-          res.status(200).json({message:"login successful",loggedIn:1});
-        })
-      })
+  }).then((user) => {
+    if(!user){
+      res.status(400).json({message:"login failed"});
     }else{
-      res.status(400).json({message:"login failed",loggedIn:0});
+      if(user.checkPassword(req.body.password)){
+        res.status(200).json({message:"login successful"});
+      }else{
+        res.status(400).json({message:"login failed"});
+      }
+
     }
-  }).catch(err => {
-    res.status(500).json(err);
   })
+
+
+
+
+    // if(success){
+    //   // regenerate the session, which is good practice to help
+    //   // guard against forms of session fixation
+    //   req.session.regenerate(function (err) {
+    //     if (err) next(err);
+    //
+    //     // store user information in session, typically a user id
+    //     req.session.user = req.body.username;
+    //     req.session.loggedIn = true;
+    //
+    //     // save the session before redirection to ensure page
+    //     // load does not happen before session is saved
+    //     req.session.save(function (err) {
+    //       if (err) return next(err);
+    //       res.status(200).json({message:"login successful",loggedIn:1});
+    //     })
+    //   })
+    // }else{
+    //   res.status(400).json({message:"login failed",loggedIn:0});
+    // }
+
 });
 
 router.put('/:id', (req,res) => {
