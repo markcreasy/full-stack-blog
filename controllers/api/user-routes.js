@@ -48,18 +48,10 @@ router.get('/logout', (req,res) => {
     // guard against forms of session fixation
     req.session.regenerate(function (err) {
       if (err) next(err)
-      // res.redirect('/')
-      res.status(200).json({message:"user logged out"});
+      res.redirect('/');
+      // res.status(200).json({message:"user logged out"});
     })
   })
-})
-
-router.get('/check-auth', (req, res) => {
-  if(!req.session.user){
-    res.status(200).json({message:"no authenticated user"});
-  }else{
-    res.status(200).json({message:req.session.user});
-  }
 })
 
 router.post('/login', (req,res) => {
@@ -77,17 +69,17 @@ router.post('/login', (req,res) => {
 
         // store user information in session, typically a user id
         req.session.user = req.body.username;
+        req.session.loggedIn = true;
 
         // save the session before redirection to ensure page
         // load does not happen before session is saved
         req.session.save(function (err) {
           if (err) return next(err);
-          // res.redirect('/');
-          res.status(200).json({message:"login successful"});
+          res.status(200).json({message:"login successful",loggedIn:1});
         })
       })
     }else{
-      res.status(400).json({message:"login failed"});
+      res.status(400).json({message:"login failed",loggedIn:0});
     }
   }).catch(err => {
     res.status(500).json(err);

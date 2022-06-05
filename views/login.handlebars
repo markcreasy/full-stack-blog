@@ -1,0 +1,19 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-4">
+      <form action="/api/users/login" method="post">
+        <div class="mb-3">
+          <label for="usernameInput" class="form-label">Username</label>
+          <input type="text" class="form-control" id="usernameInput" name="username">
+        </div>
+        <div class="mb-3">
+          <label for="passwordInput" class="form-label">Password</label>
+          <input type="password" class="form-control" id="passwordInput" name="password">
+        </div>
+        <button id="loginSubmit" type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="./js/login.js"></script>
