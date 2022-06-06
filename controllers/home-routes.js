@@ -50,7 +50,7 @@ router.get('/post/:id', (req,res) => {
   ).then(data => {
       // convert data to array
       const postData = data.get({ plain: true });
-      console.log(postData.user);
+
       res.render('single-post',{
         loggedIn: req.session.loggedIn,
         post: postData
@@ -59,7 +59,23 @@ router.get('/post/:id', (req,res) => {
 })
 
 router.get('/dashboard', isAuthenticated, (req,res) => {
-  res.render('dashboard',{loggedIn:req.session.loggedIn});
+  Post.findAll({where:{user_id:req.session.userid}})
+  .then(data => {
+    const postData = data.map(post => post.get({ plain: true }));
+    res.render('dashboard',{
+      loggedIn:req.session.loggedIn,
+      posts: postData
+    });
+  })
+})
+
+router.get('/dashboard/post/:id', isAuthenticated, (req,res) => {
+  Post.findOne({where:{id:req.params.id}})
+  .then(data => {
+    const postData = data.get({ plain: true });
+
+    res.render('edit-post',{post:postData});
+  })
 })
 
 router.get('/login', (req,res) => {

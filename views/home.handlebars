@@ -4,7 +4,9 @@
 
 
     {{#each posts as |post|}}
-      {{> post-info post }}
+      <a href="/post/{{id}}" class="list-group-item list-group-item-action">
+        {{> post-info post }}
+      </a>
     {{/each}}
 
 

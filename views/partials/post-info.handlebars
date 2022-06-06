@@ -1,8 +1,7 @@
-<a href="/post/{{id}}" class="list-group-item list-group-item-action">
-  <div class="d-flex w-100 justify-content-between">
-    <h4>{{title}}</h4>
-    <small>Posted by <span class="fst-italic">{{user.first_name}} {{user.last_name}}</span> on {{formatDate createdAt}}</small>
-  </div>
-  <p class="mb-1">{{ shortenArticle post_body }}</p>
-  <span class="badge text-bg-warning rounded-pill">{{comment_count}} comments</span>
-</a>
+
+<div class="d-flex w-100 justify-content-between">
+  <h4>{{title}}</h4>
+  <small>Posted by <span class="fst-italic">{{user.first_name}} {{user.last_name}}</span> on {{formatDate createdAt}}</small>
+</div>
+<p class="mb-1">{{ shortenArticle post_body }}</p>
+<span class="badge text-bg-warning rounded-pill">{{comment_count}} comments</span>

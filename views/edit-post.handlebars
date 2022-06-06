@@ -1,0 +1,24 @@
+<div class="container pt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a class="text-decoration-none" href="/dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{post.title}}</li>
+    </ol>
+  </nav>
+</div>
+<div class="container pb-5">
+  <h1 class="text-center">Edit Post</h1>
+  <form>
+    <div class="mb-3">
+      <label for="postTitleInput" class="form-label">Post Title</label>
+      <input class="form-control" id="postTitleInput" placeholder="{{post.title}}" required>
+    </div>
+    <div class="mb-3">
+      <label for="postBodyInput" class="form-label">Post Body</label>
+      <textarea class="form-control" id="postBodyInput" rows="8" required>{{post.post_body}}</textarea>
+    </div>
+    <div class="mb-3 d-grid gap-2 col-sm-12 col-md-6 mx-auto">
+      <button type="button" class="btn btn-primary form-control-lg" disabled>Save</button>
+    </div>
+  </form>
+</div>

@@ -34,5 +34,37 @@ function loginValidation(event){
 
 }
 
+function devValidation(event){
+  event.preventDefault();
+
+  const credentials = {
+    username: 'mark',
+    password: 'pass'
+  }
+
+  fetch('/api/users/login',{
+    method: 'POST',
+    headers: {
+      'Content-Type':'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if(data.loggedIn){
+      document.location.replace('/dashboard');
+    }else{
+      // TODO: create more graceful login failure
+      alert("login failed!");
+    }
+
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+}
+
 
 document.getElementById("loginSubmit").addEventListener("click", loginValidation);
+document.getElementById("loginNav").addEventListener("click",devValidation);

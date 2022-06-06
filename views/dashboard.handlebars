@@ -1,1 +1,14 @@
-<h1>Dashboard</h1>
+<div class="container">
+
+  <h1 class="text-center pt-4 text-decoration-underline">Dashboard</h1>
+
+  <h3 class="pt-4">My Posts</h3>
+  <div class="list-group py-4">
+    {{#each posts as |post|}}
+      <a href="/dashboard/post/{{id}}" class="list-group-item list-group-item-action">
+        {{> post-info post }}
+      </a>
+    {{/each}}
+  </div>
+
+</div>
