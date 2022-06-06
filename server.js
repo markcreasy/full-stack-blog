@@ -1,15 +1,17 @@
 // Imports
 const express = require('express');
-const {engine} =  require('express-handlebars');
+const {create} = require('express-handlebars')
 const routes = require('./controllers');
 const session = require('express-session');
+const helpers = require('./utils/helpers.js');
 
 // app and port initialization
 const app = express();
+const hbs = create({ helpers });
 const port = 3001;
 
 // setup handlebars for view handling
-app.engine('handlebars', engine());
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 app.use(express.static('public'));
