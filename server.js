@@ -4,6 +4,7 @@ const {create} = require('express-handlebars')
 const routes = require('./controllers');
 const session = require('express-session');
 const helpers = require('./utils/helpers.js');
+require('dotenv').config();
 
 // app and port initialization
 const app = express();
@@ -19,8 +20,8 @@ app.use(express.static('public'));
 // session setup
 // TODO: implement dotenv config for session secret
 var sess = {
-  secret: 'keyboard cat',
-  cookie: {},
+  secret: process.env.SESSION_SECRET,
+  cookie: { maxAge: 60000 }, // session timeout 1 minute
   resave: false,
   saveUninitialized: true,
 }

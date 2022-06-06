@@ -1,6 +1,6 @@
 
 
-function submitNewComment(){
+async function submitNewComment(){
   event.preventDefault();
 
   // get post id
@@ -13,27 +13,21 @@ function submitNewComment(){
     post_id:post_id
   };
 
-  console.log(JSON.stringify(jsonData));
-
-  fetch('/api/comments',{
+  const response = await fetch('/api/comments',{
     method:'POST',
     headers: {
       'Content-Type':'application/json'
     },
     body: JSON.stringify(jsonData)
   })
-  .then(response => response.json())
-  .then(data => {
-    if(data.success){
-      console.log("comment added successfully");
-      location.reload();
-    }else{
-      alert("failed to add new comment");
-      console.log("comment post data:",data);
-    }
-  }).catch((err) => {
-    console.log(err);
-  })
+
+  if(response.ok){
+    console.log("comment added successfully");
+    location.reload();
+  }else{
+    alert("failed to add new comment");
+    console.log(response);
+  }
 
 }
 
