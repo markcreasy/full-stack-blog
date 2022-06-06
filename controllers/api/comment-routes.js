@@ -25,12 +25,11 @@ router.post('/',(req,res) => {
   Comment.create({
     comment_text: req.body.comment_text,
     post_id: req.body.post_id,
-    // need to update via session data
-    user_id: 1
+    user_id: req.session.userid
     // need to add validations for comment text length
   }).then(success => {
     if(success){
-      res.status(200).json({message:"new comment created"});
+      res.status(200).json({message:"new comment created",success:1});
     }
   }).catch(err => {
     res.status(500).json(err);

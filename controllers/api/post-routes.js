@@ -24,8 +24,7 @@ router.post('/',(req,res) => {
   Post.create({
     title: req.body.title,
     post_body: req.body.post_body,
-    // need to update via session data
-    user_id: 1
+    user_id: req.session.userid
   }).then(success => {
     if(success){
       res.status(200).json({message:"new post created"});

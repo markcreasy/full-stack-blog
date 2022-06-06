@@ -70,7 +70,8 @@ router.post('/login', (req,res) => {
           if (err) next(err);
 
           // store user information in session, typically a user id
-          req.session.user = req.body.username;
+          req.session.user = user.username;
+          req.session.userid = user.id;
           req.session.loggedIn = true;
 
           // save the session before redirection to ensure page
