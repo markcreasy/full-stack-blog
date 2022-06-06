@@ -41,8 +41,9 @@ router.get('/post/:id', (req,res) => {
       where:{id:req.params.id},
       include:{
         model: Comment,
-        include: User
-      }
+        include: User,
+      },
+      order:[[Comment,'createdAt','DESC']]
     }
   ).then(data => {
       // convert data to array
