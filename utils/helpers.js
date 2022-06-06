@@ -5,7 +5,8 @@ function formatDate(date){
 }
 
 function shortenArticle(article){
-  return article.substring(0, 400).concat('...');
+  if(article.length > 400) return article.substring(0, 400).concat('...');
+  else return article
 }
 
 function isCurrentUser(user, currentUser){
