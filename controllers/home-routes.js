@@ -39,16 +39,18 @@ router.get('/post/:id', (req,res) => {
   Post.findOne(
     {
       where:{id:req.params.id},
-      include:{
+      include:[{
         model: Comment,
         include: User,
-      },
+      },{
+        model:User
+      }],
       order:[[Comment,'createdAt','DESC']]
     }
   ).then(data => {
       // convert data to array
       const postData = data.get({ plain: true });
-      console.log(postData);
+      console.log(postData.user);
       res.render('single-post',{
         loggedIn: req.session.loggedIn,
         post: postData

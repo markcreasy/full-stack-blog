@@ -8,8 +8,11 @@
 </div>
 
 <div class="container">
+  <div class="pb-4 post-header text-center">
+    <h1>{{post.title}}</h1>
+    <p class="text-muted">written by {{post.user.first_name}} {{post.user.last_name}} on {{formatDate post.createdAt}}</p>
+  </div>
 
-  <h1 class="text-center pb-4">{{post.title}}</h1>
   <p>
     {{post.post_body}}
   </p>
