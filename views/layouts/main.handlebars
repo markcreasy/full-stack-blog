@@ -9,38 +9,48 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg bg-light">
-      <div class="container">
-        <a class="navbar-brand badge text-bg-dark fs-4" href="#">Full Stack Blog</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard">Dashboard</a>
-            </li>
-            <li class="nav-item">
-              {{#if loggedIn}}
-              <a class="nav-link" href="/api/users/logout">Logout</a>
-              {{else}}
-              <a class="nav-link" href="/login">Login</a>
-              {{/if}}
-            </li>
-          </ul>
-        </div>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container">
+      <a class="navbar-brand badge text-bg-dark fs-4" href="#">Full Stack Blog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            {{#if loggedIn}}
+            <a class="nav-link" href="/api/users/logout">Logout</a>
+            {{else}}
+            <a class="nav-link" href="/login">Login</a>
+            {{/if}}
+          </li>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- Body -->
-    {{{body}}}
+  <!-- Body -->
+  {{{body}}}
 
-
+  <footer class="bg-light d-flex text-center justify-content-center text-muted">
+    <div class="col-sm-12 col-md-8 col-6 py-4">
+      <div class="copyright pt-4">
+        <p>Made with ❤️ by Mark Creasy</p>
+      </div>
+      <div class="social pb-3">
+        <a class="icon" href="https://www.linkedin.com/in/mark-creasy-9a1b7742" target="_blank"><img src="/images/linkedin_icon.png" alt=""/></a>
+        <a class="icon" href="https://github.com/markcreasy" target="_blank"><img src="/images/github_icon.png" alt=""/></a>
+        <a class="icon" href="mailto:mcreasy50@gmail.com" target="_blank"><img src="/images/gmail_icon.png" alt=""/></a>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>

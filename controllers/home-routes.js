@@ -36,8 +36,15 @@ router.get('/', (req, res) => {
 })
 
 router.get('/post/:id', (req,res) => {
-  Post.findOne({where:{id:req.params.id}})
-    .then(data => {
+  Post.findOne(
+    {
+      where:{id:req.params.id},
+      include:{
+        model: Comment,
+        include: User
+      }
+    }
+  ).then(data => {
       // convert data to array
       const postData = data.get({ plain: true });
       console.log(postData);

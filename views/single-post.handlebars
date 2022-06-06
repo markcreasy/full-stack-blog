@@ -1,8 +1,29 @@
+<div class="container pt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a class="text-decoration-none" href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{post.title}}</li>
+    </ol>
+  </nav>
+</div>
+
 <div class="container">
 
-  <h1 class="text-center py-3">{{post.title}}</h1>
+  <h1 class="text-center pb-4">{{post.title}}</h1>
   <p>
     {{post.post_body}}
   </p>
+
+  <ul class="list-group p-3 my-4">
+    {{#each post.comments}}
+      <li class="list-group-item">
+        <div class="d-flex w-100 justify-content-between">
+          <p class="mb-1">- {{comment_text}}</p>
+          <small>{{formatDate createdAt}}</small>
+        </div>
+        <small>posted by: {{user.first_name}} {{user.last_name}}</small>
+      </li>
+    {{/each}}
+  </ul>
 
 </div>
