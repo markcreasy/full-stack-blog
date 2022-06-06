@@ -6,7 +6,7 @@ router.get('/',(req,res) => {
   Comment.findAll({
     include: [
       {model:User},
-      {model:Post}
+      {model:Post,attributes:['id','title','user_id']}
     ]
   })
   .then( commentData => {
