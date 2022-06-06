@@ -21,7 +21,6 @@ function loginValidation(event){
   .then(data => {
     console.log(data);
     if(data.loggedIn){
-      console.log("logged in!");
       document.location.replace('/dashboard');
     }else{
       // TODO: create more graceful login failure

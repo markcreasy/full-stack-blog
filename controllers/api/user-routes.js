@@ -64,38 +64,27 @@ router.post('/login', (req,res) => {
       res.status(400).json({message:"login failed"});
     }else{
       if(user.checkPassword(req.body.password)){
-        res.status(200).json({message:"login successful"});
+        // regenerate the session, which is good practice to help
+        // guard against forms of session fixation
+        req.session.regenerate(function (err) {
+          if (err) next(err);
+
+          // store user information in session, typically a user id
+          req.session.user = req.body.username;
+          req.session.loggedIn = true;
+
+          // save the session before redirection to ensure page
+          // load does not happen before session is saved
+          req.session.save(function (err) {
+            if (err) return next(err);
+            res.status(200).json({message:"login successful",loggedIn:1});
+          })
+        })
       }else{
         res.status(400).json({message:"login failed"});
       }
-
     }
   })
-
-
-
-
-    // if(success){
-    //   // regenerate the session, which is good practice to help
-    //   // guard against forms of session fixation
-    //   req.session.regenerate(function (err) {
-    //     if (err) next(err);
-    //
-    //     // store user information in session, typically a user id
-    //     req.session.user = req.body.username;
-    //     req.session.loggedIn = true;
-    //
-    //     // save the session before redirection to ensure page
-    //     // load does not happen before session is saved
-    //     req.session.save(function (err) {
-    //       if (err) return next(err);
-    //       res.status(200).json({message:"login successful",loggedIn:1});
-    //     })
-    //   })
-    // }else{
-    //   res.status(400).json({message:"login failed",loggedIn:0});
-    // }
-
 });
 
 router.put('/:id', (req,res) => {
