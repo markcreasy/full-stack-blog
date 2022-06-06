@@ -1,12 +1,31 @@
-<div class="container">
+<div class="container pb-4">
 
-  <h1 class="text-center pt-4 text-decoration-underline">Dashboard</h1>
+  <h1 class="text-center py-4 text-decoration-underline">Dashboard</h1>
 
-  <h3 class="pt-4">My Posts</h3>
+
+  <div class="list-group my-4">
+    <div class="list-group-item py-4">
+      <h4 class="text-center p-2">Create new Post</h4>
+      <div class="mb-3">
+        <label for="postTitleInput" class="form-label">Post Title</label>
+        <input type="text" class="form-control" id="postTitleInput">
+      </div>
+      <div class="mb-3">
+        <label for="postBodyInput" class="form-label">Post Body</label>
+        <textarea class="form-control" id="postBodyInput" rows="10"></textarea>
+      </div>
+      <div class="pt-2 d-grid gap-2 col-sm-12 col-md-6 mx-auto">
+        <button id="updatePostBtn" type="button" class="btn btn-primary form-control-lg">Save</button>
+      </div>
+    </div>
+  </div>
+
+
+  <h3 class="pt-4 text-center">My Posts</h3>
   <div class="list-group py-4">
     {{#each posts as |post|}}
       <a href="/dashboard/post/{{id}}" class="list-group-item list-group-item-action">
-        {{> post-info post }}
+        {{> post-info username=../username }}
       </a>
     {{/each}}
   </div>

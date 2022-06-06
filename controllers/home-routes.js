@@ -30,6 +30,7 @@ router.get('/', (req, res) => {
       // render home with session data and post data
       res.render('home',{
         loggedIn: req.session.loggedIn,
+        username: req.session.user,
         posts: postData
       });
     })
@@ -59,11 +60,29 @@ router.get('/post/:id', (req,res) => {
 })
 
 router.get('/dashboard', isAuthenticated, (req,res) => {
-  Post.findAll({where:{user_id:req.session.userid}})
+  Post.findAll({
+    where:{user_id:req.session.userid},
+    attributes: [
+      'id',
+      'title',
+      'post_body',
+      'user_id',
+      'createdAt',
+      'updatedAt',
+      [sequelize.literal('(SELECT COUNT(*) FROM comment WHERE post.id = comment.post_id)'), 'comment_count']
+    ],
+    include: [
+      {
+        model: User,
+        attributes: ['id','first_name','last_name','username','email']
+      },
+    ]
+  })
   .then(data => {
     const postData = data.map(post => post.get({ plain: true }));
     res.render('dashboard',{
       loggedIn:req.session.loggedIn,
+      username: req.session.user,
       posts: postData
     });
   })
