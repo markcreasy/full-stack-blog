@@ -1,38 +1,39 @@
 const usernameInput = document.getElementById('usernameInput');
+const firstNameInput = document.getElementById('firstNameInput');
+const lastNameInput = document.getElementById('lastNameInput');
+const emailInput = document.getElementById('emailInput');
 const passwordInput = document.getElementById('passwordInput');
 
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 
 
-function loginValidation(event){
+async function signUpValidation(event){
   event.preventDefault();
 
   const credentials = {
     username: usernameInput.value,
+    firstname: firstNameInput.value,
+    lastname: lastNameInput.value,
+    email: emailInput.value,
     password: passwordInput.value
   }
 
-  fetch('/api/users/login',{
+  const response = await fetch('/api/users/',{
     method: 'POST',
     headers: {
       'Content-Type':'application/json'
     },
     body: JSON.stringify(credentials)
   })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    if(data.loggedIn){
-      document.location.replace('/dashboard');
-    }else{
-      customAlert("login failed", 'danger');
-    }
 
-  })
-  .catch((error) => {
-    console.log('Error:', error);
-    customAlert("login failed", 'danger');
-  });
+  if(response.ok){
+    document.location.replace('/dashboard');
+  }else{
+    const err = await response.json();
+    const errMsg = err[0].message
+    console.log(err,errMsg);
+    customAlert(errMsg,'danger');
+  }
 
 }
 
@@ -49,4 +50,5 @@ const customAlert = (message, type) => {
 }
 
 
-document.getElementById("loginSubmit").addEventListener("click", loginValidation);
+
+document.getElementById("signUpSubmit").addEventListener("click", signUpValidation);

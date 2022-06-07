@@ -4,7 +4,7 @@ const {User} = require('../../models');
 
 router.get('/', (req,res) => {
   User.findAll({
-    attributes: {exclude: ['password']}
+    // attributes: {exclude: ['password']}
   }).then( userData => {
     if(!userData){
       res.json({message:"no user data"});
@@ -25,12 +25,25 @@ router.post('/', (req,res) => {
     email: req.body.email,
     username: req.body.username,
     password: req.body.password
-  }).then( success => {
-    if(success){
-      res.status(200).json({message: "Successfully created new user"});
-    }
+  }).then( user => {
+    // regenerate the session, which is good practice to help
+    // guard against forms of session fixation
+    req.session.regenerate(function (err) {
+      if (err) next(err);
+      // store user information in session, typically a user id
+      req.session.user = user.username;
+      req.session.userid = user.id;
+      req.session.loggedIn = true;
+
+      // save the session before redirection to ensure page
+      // load does not happen before session is saved
+      req.session.save(function (err) {
+        res.status(200).json({message:"sign up successful",loggedIn:1});
+      })
+    });
   }).catch(err => {
-    res.status(500).json(err);
+    console.log(err.errors);
+    res.status(500).json(err.errors);
   })
 });
 
@@ -85,6 +98,8 @@ router.post('/login', (req,res) => {
         res.status(400).json({message:"login failed"});
       }
     }
+  }).catch(err => {
+    res.status(500).json(err);
   })
 });
 

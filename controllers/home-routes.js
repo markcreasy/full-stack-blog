@@ -93,13 +93,18 @@ router.get('/dashboard/post/:id', isAuthenticated, (req,res) => {
   .then(data => {
     const postData = data.get({ plain: true });
 
-    res.render('edit-post',{post:postData});
+    res.render('edit-post',{post:postData,loggedIn: req.session.loggedIn,});
   })
 })
 
 router.get('/login', (req,res) => {
   if(req.session.user) res.render('home')
-  else res.render('login',{loggedIn:req.session.loggedIn}) // TODO: handle login failure
+  else res.render('login') // TODO: handle login failure
+})
+
+router.get('/signup', (req,res) => {
+  if(req.session.user) res.render('home')
+  else res.render('signup') // TODO: handle signup failure
 })
 
 module.exports = router;
