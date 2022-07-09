@@ -23,4 +23,4 @@ sign in/login to create a new post, update/delete an existing post, or comment o
 3. to run client and server via concurrently `npm run start`
 
 ## Hosting
-This app is deployed to Heroku so you can view a live example: [fullstackblog](https://infinite-ocean-98029.herokuapp.com/
+This app is deployed to Heroku so you can view a live example: [fullstackblog](https://infinite-ocean-98029.herokuapp.com/)
